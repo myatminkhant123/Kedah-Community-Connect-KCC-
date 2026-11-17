@@ -11,13 +11,13 @@ CORS_ORIGIN = "http://localhost:5173"
 [[d1_databases]]
 binding = "DB"
 database_name = "kedah-community-connect-db"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "378bce08-faea-4a63-b758-e1317780b8fc"
 migrations_dir = "../../migrations"
 
-# Local R2 bucket binding (create bucket in Cloudflare before deploying)
-[[r2_buckets]]
-binding = "REPORT_FILES"
-bucket_name = "kedah-community-connect-files"
+# R2 bucket binding (uncomment once R2 is enabled in Cloudflare Dashboard)
+# [[r2_buckets]]
+# binding = "REPORT_FILES"
+# bucket_name = "kedah-community-connect-files"
 
 # Production environment overrides
 [env.production.vars]

@@ -15,9 +15,20 @@ export function createApp() {
 
   app.use('*', requestIdMiddleware);
   app.use('/api/*', async (c, next) => {
-    const origin = c.env.CORS_ORIGIN || 'http://localhost:5173';
+    const configuredOrigin = c.env.CORS_ORIGIN;
     return cors({
-      origin,
+      origin: (reqOrigin) => {
+        if (!reqOrigin) return configuredOrigin || 'http://localhost:5173';
+        if (configuredOrigin && reqOrigin === configuredOrigin) return reqOrigin;
+        if (
+          reqOrigin.includes('localhost') ||
+          reqOrigin.endsWith('.vercel.app') ||
+          reqOrigin.endsWith('.pages.dev')
+        ) {
+          return reqOrigin;
+        }
+        return configuredOrigin || reqOrigin;
+      },
       credentials: true,
       allowHeaders: ['Content-Type', 'X-CSRF-Token', 'X-Request-Id'],
       allowMethods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],

@@ -2,7 +2,7 @@ import type { PublicUser } from '@kcc/shared';
 
 export interface Env {
   DB: D1Database;
-  REPORT_FILES: R2Bucket;
+  REPORT_FILES?: R2Bucket;
   APP_ENV: string;
   CORS_ORIGIN?: string;
   SESSION_SECRET?: string;

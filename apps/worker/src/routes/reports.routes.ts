@@ -105,6 +105,9 @@ reportsRoutes.get('/:reportId/history', async (c) => {
 });
 
 reportsRoutes.post('/:reportId/attachments', async (c) => {
+  if (!c.env.REPORT_FILES) {
+    throw badRequest('STORAGE_UNAVAILABLE', 'File attachment storage is not enabled on this deployment');
+  }
   const auth = c.get('auth')!;
   const reportId = c.req.param('reportId');
   const formData = await c.req.formData();
@@ -142,6 +145,9 @@ reportsRoutes.get('/:reportId/attachments', async (c) => {
 });
 
 reportsRoutes.get('/:reportId/attachments/:attachmentId', async (c) => {
+  if (!c.env.REPORT_FILES) {
+    throw badRequest('STORAGE_UNAVAILABLE', 'File attachment storage is not enabled on this deployment');
+  }
   const auth = c.get('auth')!;
   const { reportId, attachmentId } = c.req.param();
   const attachmentService = new AttachmentService(
